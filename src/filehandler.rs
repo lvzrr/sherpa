@@ -3,7 +3,8 @@ use std::fs;
 use std::hash::{DefaultHasher, Hash, Hasher};
 use std::path::{Path, PathBuf};
 
-/*TODO: redo all this shit, it's ass honestly*/
+/* TODO: redo all this shit, it's ass honestly */
+/* ALSO READ FILES AS BYTES, ONLY IF DISPLAYED CHANGE TO SRTING */
 
 #[derive(Hash)]
 pub struct File {
