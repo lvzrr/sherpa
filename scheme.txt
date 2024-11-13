@@ -1,0 +1,150 @@
+SHERPA.RS: 
+
+Ok so check it, basically i want to make a server that: 
+
+    - takes requests
+    - displays all files in the server
+    - lets you commit changes to them 
+
+All of these should be done through a client that:
+
+    - takes the ip of the server (pre-initialized)
+    - stores the credentials (preferably encripted) in the %appdata% folder.
+    - keeps the session open (will need some kind of ack)
+
+Info on the commits, and a version counter should be added 
+
+If the files are in a folder, it will display the files with an indentationlike this: 
+
+***************************************
+
+filename 0.0.0 [00:00 00/00/00] 
+    [COMMIT INFO]
+
+FOLDERNAME: 
+    - filename 0.0.0 [00:00 00/00/00] 
+        [COMMIT INFO]
+
+***************************************
+
+PROTOCOLS:
+    - Https with auth (generated from init server)
+
+SERVER INITIALIZATION: 
+
+    tasks to-do: 
+
+        - generate a json file with info of the directory served
+        - generate a random id and password
+        - listen to possible connections through a port of my choosing
+
+    methods to implement: 
+
+        - init()
+            - genfile()
+            - openport()
+            - listen()
+        - createsession()
+        - parsereq()
+        - send()
+        - overwrite()
+        - close()
+
+CLIENT INITIALIZATION:
+
+    [First boot]:
+
+        - Ask for the server ip
+        - Ask for the server id and password
+        - Encrypt and store data in %appdata% or something 
+
+    methods to implement: 
+
+        - init()
+            - getcredentials()
+            - encrypt()
+            - openport()
+            - listen()
+        - send()
+        - overwrite()
+        - close()
+
+
+SERVER HANDLE:
+    -Method connection-handler will read a command and then generate 
+     a response code based on the command sent by the Client
+    - That code is going to be passed to gen_body_response.
+    - Then the output of said function will be written to the stream
+
+EXAMPLE OF A GET REQ:
+
++--------+                             +--------+
+| Server |                             | Client |
++--------+                             +--------+
+    |                                      |
+    | < -----------------------------------|---  Request: Connection
+    |                                      |
+    | ----------------------------------- >|---  Response: Connection OK
+    |                                      |
+    | ***************************************************************
+    |     Connection established, session created on the server to keep alive
+    | ***************************************************************
+    |                                      |
+    | < -----------------------------------|---  Request: Files list
+    |                                      |
+    | ----------------------------------- >|---  Response: Files (name, version, lastmodtime, lastcommitinfo)
+    |                                      |
+    | < -----------------------------------|---  Request: GET FILE [filename]
+    |                                      |
+    | ----------------------------------- >|---  Response: Filedata
+    |                                      |
+    | < -----------------------------------|---  Data received
+    |                                      |
+    | < -----------------------------------|---  Request: Close connection
+    |                                      |
+    | ----------------------------------- >|---  Response: Connection closed
+
+
+EXAMPLE OF A POST REQ:
+
++--------+                             +--------+
+| Server |                             | Client |
++--------+                             +--------+
+    |                                      |
+    | < -----------------------------------|---  Request: Connection
+    |                                      |
+    | ----------------------------------- >|---  Response: Connection OK
+    |                                      |
+    | ***************************************************************
+    |     Connection established, session created on the server to keep alive
+    | ***************************************************************
+    |                                      |
+    | < -----------------------------------|---  Request: Files list
+    |                                      |
+    | ----------------------------------- >|---  Response: Files (name, version, lastmodtime, lastcommitinfo)
+    |                                      |
+    | < -----------------------------------|---  Post: post FILE [filename]
+    |                                      |
+    | ----------------------------------- >|---  Response: Files list
+    |                                      |
+    | < -----------------------------------|---  Data received
+    |                                      |
+    | < -----------------------------------|---  Request: Close connection
+    |                                      |
+    | ----------------------------------- >|---  Response: Connection closed
+
+
+    .                  .-.    .  _   *     _   .
+           *          /   \     ((       _/ \     "Take everything with you..."
+         _    .   .--'\/\_ \     `      /    \  *    ___
+     *  / \_    _/ ^      \/\'__        /\/\  /\  __/   \ *
+       /    \  /    .'   _/  /  \  *' /    \/  \/ .`'\_/\   .
+  .   /\/\  /\/ :' __  ^/  ^/    `--./.'  ^  `-.\ _    _:\ _
+     /    \/  \  _/  \-' __/.' ^ _   \_   .'\   _/ \ .  __/ \
+   /\  .-   `. \/     \ / -.   _/ \ -. `_/   \ /    `._/  ^  \
+  /  `-.__ ^   / .-'.--'    . /    `--./ .-'  `-.  `-. `.  -  `.
+@/        `.  / /      `-.   /  .-'   / .   .'   \    \  \  .-  \%
+@&8jgs@@%% @)&@&(88&@.-_=_-=_-=_-=_-=_.8@% &@&&8(8%@%8)(8@%8 8%@)%
+@88:::&(&8&&8:::::%&`.~-_~~-~~_~-~_~-~~=.'@(&%::::%@8&8)::&#@8::::
+`::::::8%@@%:::::@%&8:`.=~~-.~~-.~~=..~'8::::::::&@8:::::&8:::::'
+ `::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::.'

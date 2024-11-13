@@ -1,0 +1,10 @@
+[package]
+name = "sherpa"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+chrono = "0.4.38"
+local-ip-address = "0.6.3"
+reqwest = "0.12.8"
+tokio = "1.40.0"
