@@ -10,9 +10,7 @@ mod client;
 use client::Client;
 use std::net::{IpAddr, Ipv4Addr, SocketAddr};
 
-/*
- * TODO implement asyc module and "setup" server-client interaction (improve frontend if possible)
- */
+/* TODO: Initialize the db after implroving the system analysis*/
 
 fn main() {
     let args: Vec<String> = env::args().collect();

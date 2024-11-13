@@ -3,6 +3,8 @@ use std::fs;
 use std::hash::{DefaultHasher, Hash, Hasher};
 use std::path::{Path, PathBuf};
 
+/*TODO: redo all this shit, it's ass honestly*/
+
 #[derive(Hash)]
 pub struct File {
     pub name: String,

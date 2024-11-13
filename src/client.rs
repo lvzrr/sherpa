@@ -5,6 +5,9 @@ use std::io::{stdin, stdout, Write};
 use std::net::{IpAddr, Ipv4Addr, SocketAddr, TcpListener, TcpStream};
 use std::process::exit;
 use std::str::FromStr;
+
+/* TODO: ASK FOR THE HOST IP, DONT BOTHER WITH STATIC DECLARATIONS, MAYBE VIA CLI-ARGV*/
+
 pub struct Client {
     //ip: IpAddr,
     dest_port: SocketAddr,
